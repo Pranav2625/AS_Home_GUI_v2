@@ -200,11 +200,14 @@ def Single_Username():
             sngle_double_button.config(state=DISABLED)
             print("Dealer's Cards:", sngle_card_deal_1,
                   sngle_card_deal_2)  # Print the dealers cards
+            if sngle_card_deal_ttl == 21:
+              print("Dealer wins")
+              sngle_credits_sub()
             if sngle_card_play_ttl > sngle_card_deal_ttl:  # If the players total exceeds deealers ttl
-                if sngle_card_play_ttl < 21:  # and is less than nine
+                if sngle_card_play_ttl <= 21:  # and is less than 21
                     print("You win")  # they win
                     sngle_credits_add()  # and add winnings to credits
-                if sngle_card_play_ttl > 21:  # or is more than nine
+                if sngle_card_play_ttl > 21:  # or is more than 21
                     print("You lose")  # they lose
                     sngle_credits_sub()  # and takes away credits
             if sngle_card_play_ttl < sngle_card_deal_ttl:  # If the dealers total exceeds the players ttl
