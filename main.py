@@ -4,7 +4,7 @@ import random
 import sys
 
 sngle_creds = 500  # Intial value of credits
-sngle_bets = 0  # and bets
+sngle_bets = 5  # and bets
 
 root = Tk()
 root.title("Home")
@@ -111,7 +111,7 @@ def Single_Username():
         sngle_creds_dsiplay.place(x=560, y=70)
 
         sngle_bets_counter = StringVar()  # Sets variable as a string varible
-        sngle_bets_counter.set("Bets: $0.00")  # Sets the text of the string
+        sngle_bets_counter.set("Bets: $5.00")  # Sets the text of the string
         sngle_bets_display = Label(
             sngle_frame,
             textvariable=sngle_bets_counter,
