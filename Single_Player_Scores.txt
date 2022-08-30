@@ -1,0 +1,3 @@
+Name:	  Score:
+P2        $570
+Tom       $490

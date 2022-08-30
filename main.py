@@ -13,12 +13,12 @@ dble_creds_2 = 500  # Intial value for credits for player two
 dble_bets_2 = 5  # and their bets
 
 root = Tk()
-root.title("Blackjack")
+root.title("Blackjack") # Screen Title
 
-home_frame = Frame(root, width=500, height=300, bg="maroon")
+home_frame = Frame(root, width=500, height=300, bg="maroon") # Frame for the home screen
 home_frame.grid()
 
-home_header = Label(home_frame,
+home_header = Label(home_frame,   # Header for the home screen
                     text="Blackjack",
                     font=("Times 16 bold"),
                     bg="gold",
@@ -57,7 +57,7 @@ def Single_Username():
 
     def Single_Player():
         sngle_play_win = Toplevel(sngle_usrnme_frame)
-        # sngle_usrnme_frame.title("Single Player Mode")  # Window title
+        sngle_usrnme_frame.title("Single Player Mode")  # Window title
 
         sngle_frame = Frame(sngle_play_win, width=700, height=500,
                             bg="green")  # Window Frame
@@ -140,6 +140,13 @@ def Single_Username():
                                    command=sngle_bets_sub)
         sngle_bet_sub_but.place(x=580, y=180)  # Button for removing bets
 
+      
+        def sngle_bets_check():
+          if 4<sngle_bets<101:
+            sngle_generate()
+          else:
+            print("Bets can only be min $5 or max $100 \n")
+
         def sngle_button_state():
             sngle_hit_button.config(state=DISABLED)  # disable action buttons
             sngle_stay_button.config(state=DISABLED)
@@ -149,7 +156,7 @@ def Single_Username():
             sngle_bet_sub_but.config(state=NORMAL)
             sngle_confirm_bet.config(state=NORMAL)
 
-        def sngle_generate():
+        def sngle_generate():  # Generate player and dealer cards
             global sngle_card_play_1
             global sngle_card_play_2
             global sngle_hit_card
@@ -161,7 +168,6 @@ def Single_Username():
                 1, 11)  # Make two random cards that
             sngle_card_play_2 = random.randint(
                 1, 11)  # will be used for the player
-            sngle_hit_card = random.randint(1, 11)  # Used for hit
             sngle_card_play_ttl = (sngle_card_play_1 + sngle_card_play_2
                                    )  # Total for player cards
             sngle_card_deal_1 = random.randint(1,
@@ -176,24 +182,24 @@ def Single_Username():
             sngle_bet_sub_but.config(state=DISABLED)  # remove bets
             sngle_confirm_bet.config(state=DISABLED)  # and confirm bet buttons
             print("Your cards:", sngle_card_play_1,
-                  sngle_card_play_2)  # Print the players cards
+                  sngle_card_play_2, "\n")  # Print the players cards
             if (sngle_card_play_ttl
                 ) == 21:  # If the card total is equal to nine
-                print("You win!!!!")  # print this statement
+                print("You win!!!!\n")  # print this statement
                 sngle_bet_add_but.config(
                     state=NORMAL)  # revert the buttons back to normal
                 sngle_bet_sub_but.config(state=NORMAL)
                 sngle_confirm_bet.config(state=NORMAL)
                 sngle_credits_add()  # Add bets to credits
             if (sngle_card_play_ttl) > 21:  # If the card total is over nine
-                print("Busted, You lose")  # print this
+                print("Busted, You lose\n")  # print this
                 sngle_bet_add_but.config(
                     state=NORMAL)  # revert the buttons back to normal
                 sngle_bet_sub_but.config(state=NORMAL)
                 sngle_confirm_bet.config(state=NORMAL)
                 sngle_credits_sub()  # Take away bets amount from credits
             if (sngle_card_play_ttl) < 21:  # If the total is less than nine
-                print("Choose an action at the bottom of the screen")
+                print("Choose an action at the bottom of the screen\n")
                 sngle_hit_button.config(
                     state=NORMAL)  # Enables the action buttons
                 sngle_stay_button.config(state=NORMAL)
@@ -205,22 +211,22 @@ def Single_Username():
             sngle_stay_button.config(state=DISABLED)
             sngle_double_button.config(state=DISABLED)
             print("Dealer's Cards:", sngle_card_deal_1,
-                  sngle_card_deal_2)  # Print the dealers cards
+                  sngle_card_deal_2, "\n")  # Print the dealers cards
             if sngle_card_deal_ttl == 21:
-              print("Dealer wins")
+              print("Dealer wins\n")
               sngle_credits_sub()
             if sngle_card_play_ttl > sngle_card_deal_ttl:  # If the players total exceeds deealers ttl
                 if sngle_card_play_ttl <= 21:  # and is less than 21
-                    print("You win")  # they win
+                    print("You win\n")  # they win
                     sngle_credits_add()  # and add winnings to credits
                 if sngle_card_play_ttl > 21:  # or is more than 21
-                    print("You lose")  # they lose
+                    print("You lose\n")  # they lose
                     sngle_credits_sub()  # and takes away credits
             if sngle_card_play_ttl < sngle_card_deal_ttl:  # If the dealers total exceeds the players ttl
-                print("You lose")  # they lose
+                print("You losen\n")  # they lose
                 sngle_credits_sub()  # and takes away credits
             if sngle_card_play_ttl == sngle_card_deal_ttl:  # If both totals are the same
-                print("Draw")  # Call a draw
+                print("Draw\n")  # Call a draw
             sngle_bet_add_but.config(
                 state=NORMAL)  # revert the buttons back to normal
             sngle_bet_sub_but.config(state=NORMAL)
@@ -228,20 +234,21 @@ def Single_Username():
 
         def sngle_hit():
             global sngle_card_play_ttl  # Get the player card total
+            sngle_hit_card = random.randint(1, 11)  # Used for hit
             sngle_extra_crd = sngle_hit_card
             sngle_card_play_ttl += sngle_extra_crd  # Add another card to it
-            print("Your card:", sngle_extra_crd)  # print the cards
+            print("Your card:", sngle_extra_crd, "\n")  # print the cards
             if sngle_card_play_ttl == 21:  # if the players cards total nine
-                print("You win")  # They win
+                print("You win\n")  # They win
                 sngle_credits_add(
                 )  # and get their winnings added to their credits
                 sngle_button_state()  # change the button states
             if sngle_card_play_ttl > 21:  # if the total is over nine
-                print("Busted, You lose")  # they lose
+                print("Busted, You lose\n")  # they lose
                 sngle_credits_sub()  # their credits are subtracted
                 sngle_button_state()  # and the button states are changed
             if sngle_card_play_ttl < 21:  # If the total is under nine
-                print("Press an action button to continue")
+                print("Press an action button to continue\n")
                 pass  # continue the game
 
         def sngle_dbledwn():
@@ -254,7 +261,7 @@ def Single_Username():
         sngle_confirm_bet = Button(sngle_frame,
                                    text="Confirm bets",
                                    bg="orange",
-                                   command=sngle_generate)
+                                   command=sngle_bets_check)
         sngle_confirm_bet.place(x=580, y=220)  # Confirm bet button
 
         sngle_hit_button = Button(sngle_frame,
@@ -292,7 +299,7 @@ def Single_Username():
 
             sngle_exit_but.config(state=DISABLED)
 
-            def close_sngle_exit(
+            def close_sngle_exit( # For closing single player mode
             ):  # If either the back button or window is closed
                 sngle_exit_but.config(
                     state=NORMAL
@@ -305,15 +312,33 @@ def Single_Username():
             sngle_exit_frame = Frame(sngle_exit_win,
                                      width=200,
                                      height=100,
-                                     bg="lawngreen")
+                                     bg="maroon")
             sngle_exit_frame.grid()
 
             sngle_exit_text = Label(sngle_exit_frame,
                                     text="Are you sure?",
                                     font="Times 14",
                                     justify=CENTER,
-                                    bg="lawngreen")
-            sngle_exit_text.place(x=10, y=0)
+                                    bg="gold")
+            sngle_exit_text.place(x=20, y=0)
+
+            # def sngle_scre_enter():
+            #   sngle_scre_entr_win = Toplevel(sngle_exit_frame)
+              
+            #   sngle_scre_entr_frme = Frame(sngle_scre_entr_win, width=305, height=100, bg="maroon")
+            #   sngle_scre_entr_frme.grid()
+              
+            #   sngle_scre_entr_lbl = Label(sngle_scre_entr_frme, 
+            #                               text="Would you like to enter your \nscore into the high scores list?",
+            #                               font="Times 14",
+            #                               justify=CENTER,
+            #                               bg="gold", padx=10)
+            #   sngle_scre_entr_lbl.place(x=0,y=0)
+
+            #   sngle_scre_entr_y = Button(sngle_scre_entr_frme, text="Yes")
+            #   sngle_scre_entr_y.place(x=70, y=60)
+            #   sngle_scre_entr_n = Button(sngle_scre_entr_frme, text="No", command=sngle_exit_y)
+            #   sngle_scre_entr_n.place(x=190, y=60)
 
             def sngle_exit_y():
                 sngle_exit_but.config(state=NORMAL)
@@ -344,7 +369,7 @@ def Single_Username():
     def prnt_sngle_usrnme():  # Carries out defintion if confirm is pushed
         sngle_username = sngle_usrnme_entry_box.get(
         )  # Stores the input text from the entry field in this variable as string
-        print("Hello", sngle_username)  # and prints it out
+        print("Hello", sngle_username, "\n")  # and prints it out
         Single_Player()
 
     sngle_usrnme_entry_box = Entry(sngle_usrnme_frame,
@@ -375,7 +400,7 @@ sngle_but = Button(home_frame,
                    font="arial 10 bold",
                    bd=1,
                    command=Single_Username)
-sngle_but.place(x=190, y=150)
+sngle_but.place(x=190, y=100)
 
 
 def Double_Username():
@@ -421,12 +446,6 @@ def Double_Username():
           padx=330,
           pady=12) 
       dealer_side.place(x=-10, y=0)
-      
-      dble_creds_1 = 500  # Intial value of credits for player one
-      dble_bets_1 = 5  # and their bets
-      
-      dble_creds_2 = 500  # Intial value for credits for player two
-      dble_bets_2 = 5  # and their bets
           
       
       def dble_add_creds_1():  # Adding credits for Player 1
@@ -590,7 +609,9 @@ def Double_Username():
           if dble_play_1_ttl > 21:  # If Player 1's card total go over 21
               print("Player 1 loses")  # They lose
               dble_sub_creds_1()  # Take p1's credits
-              dble_play_2_v_deal()  # Goto p2 vs dealer
+              dble_hit_but_2.config(state=NORMAL)
+              dble_stay_but_2.config(state=NORMAL)
+              dble_double_but_2.config(state=NORMAL)
           if dble_play_2_ttl == 21: # If player 2's cards total to 21
               print("Player 2 wins!!")  # They win
               dble_bet_add_but_1.config(state=NORMAL)
@@ -603,7 +624,9 @@ def Double_Username():
           if dble_play_2_ttl > 21:
               print("Player 2 loses")
               dble_sub_creds_2()
-              dble_play_1_crd_ttl_v_deal()
+              dble_hit_but_1.config(state=NORMAL)
+              dble_stay_but_1.config(state=NORMAL)
+              dble_double_but_1.config(state=NORMAL)
           if dble_play_1_ttl and dble_play_2_ttl < 21: # Play on if both players cards are below 21
               print("Choose an action (player 1 goes first) \n")
               dble_hit_but_1.config(state=NORMAL)
@@ -622,7 +645,7 @@ def Double_Username():
           dble_hit_but_2.config(state=DISABLED)
           dble_stay_but_2.config(state=DISABLED)
           dble_double_but_2.config(state=DISABLED)
-          cnfrm_crds_but.config(state=DISABLED)
+          dble_cnfrm_crds_but.config(state=DISABLED)
           global dble_play_1_ttl
           global dble_play_2_ttl
           if dble_play_1_ttl > dble_play_2_ttl:
@@ -728,7 +751,7 @@ def Double_Username():
           if dble_play_1_ttl == 21:
               print("Player 1 wins")
               dble_add_creds_1()
-              cnfrm_crds_but.config(state=DISABLED)
+              dble_cnfrm_crds_but.config(state=DISABLED)
           if dble_play_1_ttl > 21:
               print("Player 1 is busted")
               dble_sub_creds_1()
@@ -736,7 +759,7 @@ def Double_Username():
               dble_stay_but_2.config(state=DISABLED)
               dble_double_but_2.config(state=DISABLED)
               dble_play_2_v_deal()
-              cnfrm_crds_but.config(state=DISABLED)
+              dble_cnfrm_crds_but.config(state=DISABLED)
           if dble_play_1_ttl < 21:
               print("Play on \n")
               dble_hit_but_1.config(state=DISABLED)
@@ -760,7 +783,7 @@ def Double_Username():
       
       # Stay action for P1
       def dble_stay_1():
-          print("Play on \n")
+          print("Player 1 stays \n")
           dble_hit_but_1.config(state=DISABLED)
           dble_stay_but_1.config(state=DISABLED)
           dble_double_but_1.config(state=DISABLED)
@@ -801,21 +824,21 @@ def Double_Username():
           if dble_play_2_ttl == 21:
               print("Player 2 wins")
               dble_add_creds_2()
-              cnfrm_crds_but.config(state=DISABLED)
+              dble_cnfrm_crds_but.config(state=DISABLED)
           if dble_play_2_ttl > 21:
               print("Player 2 is busted")
               dble_sub_creds_2()
               dble_hit_but_2.config(state=DISABLED)
               dble_stay_but_2.config(state=DISABLED)
               dble_double_but_2.config(state=DISABLED)
-              cnfrm_crds_but.config(state=DISABLED)
+              dble_cnfrm_crds_but.config(state=DISABLED)
               dble_play_1_v_deal()
           if dble_play_2_ttl < 21:
               print("Play on \n")
               dble_hit_but_1.config(state=NORMAL)
               dble_stay_but_1.config(state=NORMAL)
               dble_double_but_1.config(state=NORMAL)
-              cnfrm_crds_but.config(state=NORMAL)
+              dble_cnfrm_crds_but.config(state=NORMAL)
             
       
       
@@ -826,17 +849,17 @@ def Double_Username():
           dble_hit_but_1.config(state=NORMAL)
           dble_stay_but_1.config(state=NORMAL)
           dble_double_but_1.config(state=NORMAL)
-          cnfrm_crds_but.config(state=NORMAL)
+          dble_cnfrm_crds_but.config(state=NORMAL)
       
       def dble_stay_2():  # P2 stay function
-          print("Play on \n")
+          print("Player 2 stays \n")
           dble_hit_but_2.config(state=DISABLED)
           dble_stay_but_2.config(state=DISABLED)
           dble_double_but_2.config(state=DISABLED)
           dble_hit_but_1.config(state=NORMAL)
           dble_stay_but_1.config(state=NORMAL)
           dble_double_but_1.config(state=NORMAL)
-          cnfrm_crds_but.config(state=NORMAL)
+          dble_cnfrm_crds_but.config(state=NORMAL)
       
       
       dble_hit_but_2 = Button(dble_frame,  # P2 hit button
@@ -861,8 +884,8 @@ def Double_Username():
       dble_double_but_2.place(x=610, y=380)
       
       # Confirms cards
-      cnfrm_crds_but = Button(dble_frame, text="Confirm Cards", bg="orange", bd=1, command=dble_crd_check)
-      cnfrm_crds_but.place(x=295, y=400)
+      dble_cnfrm_crds_but = Button(dble_frame, text="Confirm Cards", bg="orange", bd=1, command=dble_crd_check)
+      dble_cnfrm_crds_but.place(x=295, y=400)
       
       dble_hit_but_1.config(state=DISABLED)  # Disables card action buttons at start
       dble_stay_but_1.config(state=DISABLED)
@@ -870,7 +893,7 @@ def Double_Username():
       dble_hit_but_2.config(state=DISABLED)
       dble_stay_but_2.config(state=DISABLED)
       dble_double_but_2.config(state=DISABLED)
-      cnfrm_crds_but.config(state=DISABLED)
+      dble_cnfrm_crds_but.config(state=DISABLED)
       
       
       dble_rules_but = Button(dble_frame, text="Rules", bg="orange", bd=1)  # Rules buttons
@@ -934,7 +957,7 @@ def Double_Username():
         dble_username1 = dble_usrnme_entry_box1.get()  # Store the usr input in
         dble_username2 = dble_usrnme_entry_box2.get()  # these two variables
         print("Hello", dble_username1, "&",
-              dble_username2)  # and print this statement in the terminal
+              dble_username2, "\n")  # and print this statement in the terminal
         Double_Player()
 
     dble_usrnme_entry_box1 = Entry(dble_usrnme_frame,
@@ -968,10 +991,15 @@ dble_but = Button(home_frame,
                   font="arial 10 bold",
                   bd=1,
                   command=Double_Username)
-dble_but.place(x=195, y=205)
+dble_but.place(x=195, y=155)
 
 
-scores_button = Button(home_frame, text="Player Scores", font="arial 10 bold")
-scores_button.place(x=189, y=260)
+def sngle_scores():
+  f = open("Single_Player_Scores.txt", "rt")
+  print(f.read())
+  f.close()
+
+sngle_scores_button = Button(home_frame, text="Singleplayer Scores", font="arial 10 bold", command=sngle_scores) # Singleplayer scores button
+sngle_scores_button.place(x=165, y=210)
 
 root.mainloop()  # Loops the program until stopped/exited
