@@ -294,11 +294,8 @@ def Single_Username():
           sngle_rules_win = Toplevel(sngle_frame)
           sngle_rules_but.config(state=DISABLED)
           
-          def close_sngle_rules( # For closing single player mode
-            ):  # If either the back button or window is closed
-                sngle_rules_but.config(
-                    state=NORMAL
-                )  # revert the single player button back to normal
+          def close_sngle_rules():  # If either the back button or window is closed
+                sngle_rules_but.config(state=NORMAL)
                 sngle_rules_win.destroy()
 
           sngle_rules_win.protocol("WM_DELETE_WINDOW",
@@ -952,8 +949,53 @@ def Double_Username():
       dble_double_but_2.config(state=DISABLED)
       dble_cnfrm_crds_but.config(state=DISABLED)
       
-      
-      dble_rules_but = Button(dble_frame, text="Rules", bg="orange", bd=1)  # Rules buttons
+
+      def dble_rules():
+        dble_rules_win = Toplevel(dble_frame)
+        dble_rules_but.config(state=DISABLED)
+          
+        def close_dble_rules():  # If window is closed
+                dble_rules_but.config(state=NORMAL)
+                dble_rules_win.destroy()
+
+        dble_rules_win.protocol("WM_DELETE_WINDOW",
+                                    partial(close_dble_rules))
+
+        dble_rules_frme = Frame(dble_rules_win, width=685, height=435, bg="maroon")
+        dble_rules_frme.grid()
+
+        dble_rules_lbl = Label(dble_rules_frme, text="Rules", font="Times 14", justify=CENTER, bg="gold", padx=400)
+        dble_rules_lbl.place(x=-100,y=0)
+
+        dble_rules_txt = Label(dble_rules_frme, text='''
+        * Aim: The aim of the game is win by one of the following ways:
+          Have 21 from your card total (Instant win)
+          Have a higher card total then the dealer (who you play against)
+          The dealer is busted (their card total goes over 21)
+        * The Game: Both players start off by adding or removing bets using the buttons and when you are 
+          happy with your amount, continue the game by pressing confirm bets.
+          The game will then deal out your cards. If a player’s cards total 21, they instantly win, if a player’s 
+          cards total over 21, they instantly lose, otherwise both players move on to the next 
+          phase where you can choose your action.
+          Players have three actions to choose from:
+          - Hit: Gain an extra card
+          - Stay: Do nothing
+          - Double: Double the amount of bets
+        	After pressing confirm cards, the game will check the cards total. Which ever player   
+          has the highest total will move on to face the dealer. The game will compare the 
+          totals of the player’s cards. They are now faced with the following scenarios:
+          - If the dealer’s cards totals 21, both players lose
+          - If the dealer’s cards goes over 21, they are busted and that player wins
+          - If the dealer has a higher card total than the player and is under 21, players lose
+          - If the you have a higher card total than the dealer, that player wins win
+          - If you draw, no one wins
+        * End: If a player wins, their bets will be added to their credits, if they lose, their bets will be taken 
+          from their credits.
+          You can either exit or continue the game
+        ''', font="Time 10", justify=LEFT, bg="orange")
+        dble_rules_txt.place(x=-30, y=25)
+        
+      dble_rules_but = Button(dble_frame, text="Rules", bg="orange", bd=1, command=dble_rules)  # Rules buttons
       dble_rules_but.place(x=580, y=430)
       
       
@@ -964,7 +1006,7 @@ def Double_Username():
       
           def close_dble_exit():  # If either the back button or window is closed
               dble_exit_but.config(
-                  state=NORMAL)  # revert the single player button back to normal
+                  state=NORMAL)  # revert the exit player button back to normal
               sngle_exit_win.destroy()
       
           dble_exit_win.protocol("WM_DELETE_WINDOW", partial(close_dble_exit))
