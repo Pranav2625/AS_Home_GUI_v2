@@ -57,7 +57,6 @@ def Single_Username():
 
     def Single_Player():
         sngle_play_win = Toplevel(sngle_usrnme_frame)
-        sngle_usrnme_frame.title("Single Player Mode")  # Window title
 
         sngle_frame = Frame(sngle_play_win, width=700, height=500,
                             bg="green")  # Window Frame
@@ -123,7 +122,7 @@ def Single_Username():
             textvariable=sngle_bets_counter,
             bg="orange",
             font="Times 10")  # Makes the bets counter display
-        sngle_bets_display.place(x=596, y=100)
+        sngle_bets_display.place(x=580, y=100)
 
         sngle_bet_add_sub_var = IntVar()  # Assigns this as an intger variable
         sngle_bet_add_sub_var.set(5)  # Sets a numerical value
@@ -223,7 +222,7 @@ def Single_Username():
                     print("You lose\n")  # they lose
                     sngle_credits_sub()  # and takes away credits
             if sngle_card_play_ttl < sngle_card_deal_ttl:  # If the dealers total exceeds the players ttl
-                print("You losen\n")  # they lose
+                print("You lose\n")  # they lose
                 sngle_credits_sub()  # and takes away credits
             if sngle_card_play_ttl == sngle_card_deal_ttl:  # If both totals are the same
                 print("Draw\n")  # Call a draw
@@ -256,7 +255,7 @@ def Single_Username():
             sngle_bets *= 2  # Multiply it by two
             sngle_bets_counter.set(
                 "Bets: ${:.2f}".format(sngle_bets))  # and format it
-            sngle_play()
+            # sngle_play()
 
         sngle_confirm_bet = Button(sngle_frame,
                                    text="Confirm bets",
@@ -291,11 +290,57 @@ def Single_Username():
         sngle_stay_button.config(state=DISABLED)
         sngle_double_button.config(state=DISABLED)
 
-        sngle_rules_but = Button(sngle_frame, text="Rules", bg="orange", bd=1)
+        def sngle_rules():
+          sngle_rules_win = Toplevel(sngle_frame)
+          sngle_rules_but.config(state=DISABLED)
+          
+          def close_sngle_rules( # For closing single player mode
+            ):  # If either the back button or window is closed
+                sngle_rules_but.config(
+                    state=NORMAL
+                )  # revert the single player button back to normal
+                sngle_rules_win.destroy()
+
+          sngle_rules_win.protocol("WM_DELETE_WINDOW",
+                                    partial(close_sngle_rules))
+
+          sngle_rules_frme = Frame(sngle_rules_win, width=685, height=420, bg="maroon")
+          sngle_rules_frme.grid()
+
+          sngle_rules_lbl = Label(sngle_rules_frme, text="Rules", font="Times 14", justify=CENTER, bg="gold", padx=400)
+          sngle_rules_lbl.place(x=-100,y=0)
+
+          sngle_rules_txt = Label(sngle_rules_frme, text='''
+          * Aim: The aim of the game is win by one of the following ways:
+          Have 21 from your card total (Instant win)
+          Have a higher card total then the dealer (who you play against)
+          The dealer is busted (their card total goes over 21)
+          * The Game: Start off by adding or removing bets using the buttons and when you are happy with 
+            your amount, continue the game by pressing confirm bets.
+            The game will then deal out your cards. If they total 21, you instantly win, if they total over 21, 
+            you instantly lose, otherwise you move on to the next phase where you can choose your action.
+            You have three actions to choose from:
+            - Hit: Gain an extra card
+            - Stay: Move on to face the dealer
+            - Double: Double the amount of bets
+            After pressing stay, you will move on to face the dealer. The game will compare the 
+            totals of your cards. You are now faced with the following scenarios:
+            If the dealer’s cards totals 21, you lose
+            If the dealer’s cards goes over 21, they are busted and you win
+            If the dealer has a higher card total than you and is under 21, you lose
+            If the you have a higher card total than the dealer, you win
+            If you draw, no one wins
+          * End: If you win, your bets will be added to your credits, if you lose, your bets will be taken from 
+            your credits.
+            You can either exit or continue the game''', font="Times 10", justify=LEFT,bg="orange")
+          sngle_rules_txt.place(x=-30,y=25)
+
+        sngle_rules_but = Button(sngle_frame, text="Rules", bg="orange", bd=1, command=sngle_rules)
         sngle_rules_but.place(x=580, y=370)
 
         def sngle_exit():
-            sngle_exit_win = Toplevel(root)
+            # sngle_exit_win = Toplevel(root)
+            sngle_exit_win = Toplevel(sngle_frame)
 
             sngle_exit_but.config(state=DISABLED)
 
@@ -319,26 +364,37 @@ def Single_Username():
                                     text="Are you sure?",
                                     font="Times 14",
                                     justify=CENTER,
-                                    bg="gold")
-            sngle_exit_text.place(x=20, y=0)
+                                    bg="gold", padx=35)
+            sngle_exit_text.place(x=0, y=0)
 
-            # def sngle_scre_enter():
-            #   sngle_scre_entr_win = Toplevel(sngle_exit_frame)
+            def sngle_scre_enter():
+              sngle_scre_entr_win = Toplevel(sngle_exit_frame)
               
-            #   sngle_scre_entr_frme = Frame(sngle_scre_entr_win, width=305, height=100, bg="maroon")
-            #   sngle_scre_entr_frme.grid()
+              sngle_scre_entr_frme = Frame(sngle_scre_entr_win, width=305, height=100, bg="maroon")
+              sngle_scre_entr_frme.grid()
               
-            #   sngle_scre_entr_lbl = Label(sngle_scre_entr_frme, 
-            #                               text="Would you like to enter your \nscore into the high scores list?",
-            #                               font="Times 14",
-            #                               justify=CENTER,
-            #                               bg="gold", padx=10)
-            #   sngle_scre_entr_lbl.place(x=0,y=0)
+              sngle_scre_entr_lbl = Label(sngle_scre_entr_frme, 
+                                          text="Would you like to enter your \nscore into the high scores list?",
+                                          font="Times 14",
+                                          justify=CENTER,
+                                          bg="gold", padx=10)
+              sngle_scre_entr_lbl.place(x=0,y=0)
 
-            #   sngle_scre_entr_y = Button(sngle_scre_entr_frme, text="Yes")
-            #   sngle_scre_entr_y.place(x=70, y=60)
-            #   sngle_scre_entr_n = Button(sngle_scre_entr_frme, text="No", command=sngle_exit_y)
-            #   sngle_scre_entr_n.place(x=190, y=60)
+              def scre_enter_info():
+                global sngle_username
+                global sngle_creds
+                sngle_scre_cred = str(sngle_creds)
+                f = open("Single_Player_Scores.txt", "a")
+                info_enter = ("\n" + sngle_username + "\t\t " + "$" + sngle_scre_cred)
+                f.write(info_enter)
+                # print(f.read(),"\n")
+                f.close()
+                sngle_exit_y()
+
+              sngle_scre_entr_y = Button(sngle_scre_entr_frme, text="Yes", command=scre_enter_info)
+              sngle_scre_entr_y.place(x=70, y=60)
+              sngle_scre_entr_n = Button(sngle_scre_entr_frme, text="No", command=sngle_exit_y)
+              sngle_scre_entr_n.place(x=190, y=60)
 
             def sngle_exit_y():
                 sngle_exit_but.config(state=NORMAL)
@@ -349,7 +405,7 @@ def Single_Username():
                                      text="Yes",
                                      font="Times 10",
                                      bd=1,
-                                     command=sngle_exit_y)
+                                     command=sngle_scre_enter)
             sngle_ext_y_but.place(x=20, y=50)
 
             sngle_ext_n_but = Button(sngle_exit_frame,
@@ -367,6 +423,7 @@ def Single_Username():
         sngle_exit_but.place(x=580, y=400)
 
     def prnt_sngle_usrnme():  # Carries out defintion if confirm is pushed
+        global sngle_username
         sngle_username = sngle_usrnme_entry_box.get(
         )  # Stores the input text from the entry field in this variable as string
         print("Hello", sngle_username, "\n")  # and prints it out
@@ -996,7 +1053,7 @@ dble_but.place(x=195, y=155)
 
 def sngle_scores():
   f = open("Single_Player_Scores.txt", "rt")
-  print(f.read())
+  print(f.read(),"\n")
   f.close()
 
 sngle_scores_button = Button(home_frame, text="Singleplayer Scores", font="arial 10 bold", command=sngle_scores) # Singleplayer scores button
