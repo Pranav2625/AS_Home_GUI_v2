@@ -329,7 +329,7 @@ def Single_Username():
             If you draw, no one wins
           * End: If you win, your bets will be added to your credits, if you lose, your bets will be taken from 
             your credits.
-            You can either exit or continue the game''', font="Times 10", justify=LEFT,bg="orange")
+            You can either exit or continue the game''', font="Times 10", justify=LEFT,bg="lawn green")
           sngle_rules_txt.place(x=-30,y=25)
 
         sngle_rules_but = Button(sngle_frame, text="Rules", bg="orange", bd=1, command=sngle_rules)
@@ -961,7 +961,7 @@ def Double_Username():
         dble_rules_win.protocol("WM_DELETE_WINDOW",
                                     partial(close_dble_rules))
 
-        dble_rules_frme = Frame(dble_rules_win, width=685, height=435, bg="maroon")
+        dble_rules_frme = Frame(dble_rules_win, width=665, height=435, bg="maroon")
         dble_rules_frme.grid()
 
         dble_rules_lbl = Label(dble_rules_frme, text="Rules", font="Times 14", justify=CENTER, bg="gold", padx=400)
@@ -992,7 +992,7 @@ def Double_Username():
         * End: If a player wins, their bets will be added to their credits, if they lose, their bets will be taken 
           from their credits.
           You can either exit or continue the game
-        ''', font="Time 10", justify=LEFT, bg="orange")
+        ''', font="Time 10", justify=LEFT, bg="lawn green")
         dble_rules_txt.place(x=-30, y=25)
         
       dble_rules_but = Button(dble_frame, text="Rules", bg="orange", bd=1, command=dble_rules)  # Rules buttons
