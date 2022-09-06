@@ -32,10 +32,14 @@ def Single_Username():
     sngle_usrnme_win = Toplevel(root)
 
     sngle_but.config(state=DISABLED)
+    dble_but.config(state=DISABLED)
+    sngle_scores_button.config(state=DISABLED)
 
     def close_sngle_usrnme():  # If either the back button or window is closed
         sngle_but.config(
             state=NORMAL)  # revert the single player button back to normal
+        dble_but.config(state=NORMAL)
+        sngle_scores_button.config(state=NORMAL)
         sngle_usrnme_win.destroy()
 
     sngle_usrnme_win.protocol("WM_DELETE_WINDOW", partial(close_sngle_usrnme))
@@ -79,6 +83,7 @@ def Single_Username():
             sngle_creds_counter.set(
                 "Credits: ${:.2f}".format(sngle_creds))  # Format
             # it into the counter
+            print("To play again, confirm your bets or press exit to exit game\n")
 
         def sngle_credits_sub():
             global sngle_creds  # Get credits count
@@ -87,6 +92,7 @@ def Single_Username():
             sngle_creds_counter.set(
                 "Credits: ${:.2f}".format(sngle_creds))  # Format it
             # it into counter
+            print("To play again, confirm your bets or press exit to exit game\n")
 
         def sngle_bets_add():  # For adding bets
             global sngle_bets  # get the intitial value
@@ -382,7 +388,7 @@ def Single_Username():
                 global sngle_creds
                 sngle_scre_cred = str(sngle_creds)
                 f = open("Single_Player_Scores.txt", "a")
-                info_enter = ("\n" + sngle_username + "\t\t " + "$" + sngle_scre_cred)
+                info_enter = ("\n"+sngle_username + "  " + "$" + sngle_scre_cred)
                 f.write(info_enter)
                 # print(f.read(),"\n")
                 f.close()
@@ -423,7 +429,8 @@ def Single_Username():
         global sngle_username
         sngle_username = sngle_usrnme_entry_box.get(
         )  # Stores the input text from the entry field in this variable as string
-        print("Hello", sngle_username, "\n")  # and prints it out
+        print("Hello", sngle_username)  # and prints it out
+        print("If you need help, click rules\n")
         Single_Player()
 
     sngle_usrnme_entry_box = Entry(sngle_usrnme_frame,
@@ -453,6 +460,7 @@ sngle_but = Button(home_frame,
                    text="Single-player",
                    font="arial 10 bold",
                    bd=1,
+                   bg="orange",
                    command=Single_Username)
 sngle_but.place(x=190, y=100)
 
@@ -460,11 +468,15 @@ sngle_but.place(x=190, y=100)
 def Double_Username():
     dble_usrnme_win = Toplevel(root)
 
+    sngle_but.config(state=DISABLED)
     dble_but.config(state=DISABLED)
+    sngle_scores_button.config(state=DISABLED)
 
     def close_dble_usrnme():  # If either the back button or window is closed
         dble_but.config(
             state=NORMAL)  # revert the single player button back to normal
+        sngle_but.config(state=NORMAL)
+        sngle_scores_button.config(state=NORMAL)
         dble_usrnme_win.destroy()
 
     dble_usrnme_win.protocol("WM_DELETE_WINDOW", partial(close_dble_usrnme))
@@ -900,6 +912,9 @@ def Double_Username():
           global dble_bets_2
           dble_bets_2 *= 2
           dble_bets_2_counter.set("Bets: ${:.2f}".format(dble_bets_2))
+          dble_hit_but_2.config(state=DISABLED)
+          dble_stay_but_2.config(state=DISABLED)
+          dble_double_but_2.config(state=DISABLED)
           dble_hit_but_1.config(state=NORMAL)
           dble_stay_but_1.config(state=NORMAL)
           dble_double_but_1.config(state=NORMAL)
@@ -1056,7 +1071,8 @@ def Double_Username():
         dble_username1 = dble_usrnme_entry_box1.get()  # Store the usr input in
         dble_username2 = dble_usrnme_entry_box2.get()  # these two variables
         print("Hello", dble_username1, "&",
-              dble_username2, "\n")  # and print this statement in the terminal
+              dble_username2)  # and print this statement in the terminal
+        print("If you need help, click rules\n")
         Double_Player()
 
     dble_usrnme_entry_box1 = Entry(dble_usrnme_frame,
@@ -1089,16 +1105,62 @@ dble_but = Button(home_frame,
                   text="Two Players",
                   font="arial 10 bold",
                   bd=1,
+                  bg="orange",
                   command=Double_Username)
 dble_but.place(x=195, y=155)
 
 
-def sngle_scores():
-  f = open("Single_Player_Scores.txt", "rt")
-  print(f.read(),"\n")
-  f.close()
+def scre_window():
+    sngle_scores_win = Toplevel(root)
 
-sngle_scores_button = Button(home_frame, text="Singleplayer Scores", font="arial 10 bold", command=sngle_scores) # Singleplayer scores button
+    sngle_but.config(state=DISABLED)
+    dble_but.config(state=DISABLED)
+    sngle_scores_button.config(state=DISABLED)
+
+    def close_sngle_scores():  # If either the back button or window is closed
+        f.close()
+        sngle_scores_button.config(
+            state=NORMAL)  # revert the single player button back to normal
+        sngle_but.config(state=NORMAL)
+        dble_but.config(state=NORMAL)
+        sngle_scores_win.destroy()
+
+    sngle_scores_win.protocol("WM_DELETE_WINDOW", partial(close_sngle_scores))
+
+    sngle_scores_frame = Frame(sngle_scores_win,
+                              width=300,
+                              height=500,
+                              bg="maroon")
+    sngle_scores_frame.grid()
+
+    sngle_scores_header = Label(sngle_scores_frame,
+                               text="Single Player Scores",
+                               font="Times 14 bold",
+                               justify=CENTER,
+                               bg="gold",
+                               padx=170,
+                               pady=10)
+    sngle_scores_header.place(x=-140, y=0)
+
+    f = open("Single_Player_Scores.txt", "r")
+  
+    sngle_scores_txt = Label(sngle_scores_frame,
+                            text=f.read(),
+                            font="Times 10",
+                            justify=LEFT,
+                            bg="orange",
+                            padx=75)
+    sngle_scores_txt.place(x=-10,y=45)
+
+    sngle_scores_back = Button(
+        sngle_scores_frame,
+        text="Back",
+        bg="orange",  # Creates back button
+        font="arial 10 bold",
+        command=partial(close_sngle_scores))
+    sngle_scores_back.place(x=95, y=240)
+
+sngle_scores_button = Button(home_frame, text="Singleplayer Scores", font="arial 10 bold", bg="orange", command=scre_window) # Singleplayer scores button
 sngle_scores_button.place(x=165, y=210)
 
 root.mainloop()  # Loops the program until stopped/exited
